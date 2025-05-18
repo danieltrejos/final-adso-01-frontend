@@ -1,6 +1,6 @@
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { BookOpen } from "lucide-react"
+import { TransitionLink } from "@/components/ui/transition-link"
 
 export default function Home() {
   return (
@@ -11,12 +11,12 @@ export default function Home() {
           <span className="text-xl font-bold">Biblio App</span>
         </div>
         <nav className="flex gap-4">
-          <Link href="#caracteristicas" className="text-sm font-medium">
+          <TransitionLink href="#caracteristicas" className="text-sm font-medium">
             Características
-          </Link>
-          <Link href="#acerca-de" className="text-sm font-medium">
+          </TransitionLink>
+          <TransitionLink href="#acerca-de" className="text-sm font-medium">
             Acerca de
-          </Link>
+          </TransitionLink>
         </nav>
       </header>
       <main className="flex-1">
@@ -32,7 +32,7 @@ export default function Home() {
               lugar.
             </p>
             <Button asChild size="lg" className="mt-10 bg-emerald-600 hover:bg-emerald-700">
-              <Link href="/dashboard">Gestionar Libros</Link>
+              <TransitionLink href="/dashboard">Gestionar Libros</TransitionLink>
             </Button>
           </div>
         </section>
@@ -104,7 +104,7 @@ export default function Home() {
           <div className="container text-center">
             <h2 className="text-3xl font-bold">¿Listo para organizar tu colección?</h2>
             <Button asChild variant="outline" size="lg" className="mt-8 bg-white text-emerald-600 hover:bg-emerald-50">
-              <Link href="/dashboard">Comenzar Ahora</Link>
+              <TransitionLink href="/dashboard">Comenzar Ahora</TransitionLink>
             </Button>
           </div>
         </section>
