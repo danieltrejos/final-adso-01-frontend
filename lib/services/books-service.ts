@@ -53,13 +53,23 @@ export const BooksService = {
   // Obtener todos los libros activos
   async getAll(
     params: {
-      search?: string
-      authorId?: number
-      publisherId?: number
-      categoryId?: number
+      page?: number;
+      limit?: number;
+      search?: string;
+      authorId?: number;
+      publisherId?: number;
+      categoryId?: number;
     } = {},
   ) {
     const queryParams = new URLSearchParams()
+
+    if (params.page) {
+      queryParams.append("page", params.page.toString())
+    }
+
+    if (params.limit) {
+      queryParams.append("limit", params.limit.toString())
+    }
 
     if (params.search) {
       queryParams.append("search", params.search)
@@ -96,6 +106,16 @@ export const BooksService = {
 
     const url = `${BASE_URL}/inactive?${queryParams.toString()}`
     const response = await fetch(url, {
+      ...defaultFetchOptions,
+      method: "GET",
+    })
+
+    return handleApiResponse(response)
+  },
+
+  // Obtener estadísticas de libros activos y préstamos
+  async getActiveStats(): Promise<{ books: number; loans: number }> {
+    const response = await fetch(`${BASE_URL}/stats/active`, {
       ...defaultFetchOptions,
       method: "GET",
     })

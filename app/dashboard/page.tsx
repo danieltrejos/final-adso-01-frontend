@@ -1,8 +1,49 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BookOpen, Users, BookCopy, Building2, Tag } from "lucide-react"
 import Link from "next/link"
+import { BooksService, AuthorsService, PublishersService, CategoriesService } from "@/lib/services"
 
 export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    books: 0,
+    authors: 0,
+    loans: 0,
+    categories: 0,
+    publishers: 0,
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        setLoading(true)
+        const [booksStats, authorsResponse, publishersResponse, categoriesResponse] = await Promise.all([
+          BooksService.getActiveStats(),
+          AuthorsService.getAll(),
+          PublishersService.getAll(),
+          CategoriesService.getAll(),
+        ])
+
+        setStats({
+          books: booksStats?.books ?? 0,
+          loans: booksStats?.loans ?? 0,
+          authors: authorsResponse?.filter(a => a.active)?.length ?? 0,
+          publishers: publishersResponse?.filter(p => p.active)?.length ?? 0,
+          categories: categoriesResponse?.filter(c => c.active)?.length ?? 0,
+        })
+      } catch (error) {
+        console.error('Error loading stats:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadStats()
+  }, [])
+
   return (
     <div className="space-y-6">
       <div>
@@ -13,12 +54,11 @@ export default function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Total Libros</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Libros Activos</CardTitle>
             <BookOpen className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">120</div>
-            <p className="text-xs text-muted-foreground">+5 en el último mes</p>
+            <div className="text-2xl font-bold">{loading ? '...' : stats.books}</div>
           </CardContent>
         </Card>
         <Card>
@@ -27,8 +67,7 @@ export default function DashboardPage() {
             <Users className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">45</div>
-            <p className="text-xs text-muted-foreground">+2 en el último mes</p>
+            <div className="text-2xl font-bold">{loading ? '...' : stats.authors}</div>
           </CardContent>
         </Card>
         <Card>
@@ -37,18 +76,16 @@ export default function DashboardPage() {
             <BookCopy className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">18</div>
-            <p className="text-xs text-muted-foreground">3 por vencer pronto</p>
+            <div className="text-2xl font-bold">{loading ? '...' : stats.loans}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Usuarios</CardTitle>
-            <Users className="w-4 h-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Total Editoriales</CardTitle>
+            <Building2 className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">32</div>
-            <p className="text-xs text-muted-foreground">+3 en el último mes</p>
+            <div className="text-2xl font-bold">{loading ? '...' : stats.publishers}</div>
           </CardContent>
         </Card>
       </div>
@@ -65,7 +102,7 @@ export default function DashboardPage() {
                 <Tag className="h-10 w-10 text-primary" />
                 <div>
                   <p className="text-sm font-medium">Categorías</p>
-                  <p className="text-xs text-muted-foreground">12 categorías activas</p>
+                  <p className="text-xs text-muted-foreground">{loading ? '...' : `${stats.categories} categorías activas`}</p>
                 </div>
               </div>
               <Link
@@ -88,7 +125,7 @@ export default function DashboardPage() {
                 <BookOpen className="h-10 w-10 text-primary" />
                 <div>
                   <p className="text-sm font-medium">Libros</p>
-                  <p className="text-xs text-muted-foreground">120 libros en el sistema</p>
+                  <p className="text-xs text-muted-foreground">{loading ? '...' : `${stats.books} libros activos`}</p>
                 </div>
               </div>
               <Link
@@ -111,7 +148,7 @@ export default function DashboardPage() {
                 <Users className="h-10 w-10 text-primary" />
                 <div>
                   <p className="text-sm font-medium">Autores</p>
-                  <p className="text-xs text-muted-foreground">45 autores registrados</p>
+                  <p className="text-xs text-muted-foreground">{loading ? '...' : `${stats.authors} autores registrados`}</p>
                 </div>
               </div>
               <Link
@@ -134,7 +171,7 @@ export default function DashboardPage() {
                 <Building2 className="h-10 w-10 text-primary" />
                 <div>
                   <p className="text-sm font-medium">Editoriales</p>
-                  <p className="text-xs text-muted-foreground">15 editoriales activas</p>
+                  <p className="text-xs text-muted-foreground">{loading ? '...' : `${stats.publishers} editoriales activas`}</p>
                 </div>
               </div>
               <Link
