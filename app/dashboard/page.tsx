@@ -1,0 +1,152 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { BookOpen, Users, BookCopy, Building2, Tag } from "lucide-react"
+import Link from "next/link"
+
+export default function DashboardPage() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Panel de Control</h1>
+        <p className="text-muted-foreground">Bienvenido al panel de administración de BiblioApp</p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-sm font-medium">Total Libros</CardTitle>
+            <BookOpen className="w-4 h-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">120</div>
+            <p className="text-xs text-muted-foreground">+5 en el último mes</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-sm font-medium">Total Autores</CardTitle>
+            <Users className="w-4 h-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">45</div>
+            <p className="text-xs text-muted-foreground">+2 en el último mes</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-sm font-medium">Préstamos Activos</CardTitle>
+            <BookCopy className="w-4 h-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">18</div>
+            <p className="text-xs text-muted-foreground">3 por vencer pronto</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-sm font-medium">Usuarios</CardTitle>
+            <Users className="w-4 h-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">32</div>
+            <p className="text-xs text-muted-foreground">+3 en el último mes</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Administrar categorías</CardTitle>
+            <CardDescription>Agregar, editar y eliminar categorías de libros.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Tag className="h-10 w-10 text-primary" />
+                <div>
+                  <p className="text-sm font-medium">Categorías</p>
+                  <p className="text-xs text-muted-foreground">12 categorías activas</p>
+                </div>
+              </div>
+              <Link
+                href="/dashboard/categories"
+                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                Ir a Categorías
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Administrar libros</CardTitle>
+            <CardDescription>Agregar, editar y eliminar libros en la Biblioteca.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <BookOpen className="h-10 w-10 text-primary" />
+                <div>
+                  <p className="text-sm font-medium">Libros</p>
+                  <p className="text-xs text-muted-foreground">120 libros en el sistema</p>
+                </div>
+              </div>
+              <Link
+                href="/dashboard/books"
+                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                Ir a Libros
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Administrar autores</CardTitle>
+            <CardDescription>Agregar, editar y eliminar autores de libros.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Users className="h-10 w-10 text-primary" />
+                <div>
+                  <p className="text-sm font-medium">Autores</p>
+                  <p className="text-xs text-muted-foreground">45 autores registrados</p>
+                </div>
+              </div>
+              <Link
+                href="/dashboard/authors"
+                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                Ir a Autores
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Administrar editoriales</CardTitle>
+            <CardDescription>Agregar, editar y eliminar editoriales de libros.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Building2 className="h-10 w-10 text-primary" />
+                <div>
+                  <p className="text-sm font-medium">Editoriales</p>
+                  <p className="text-xs text-muted-foreground">15 editoriales activas</p>
+                </div>
+              </div>
+              <Link
+                href="/dashboard/publishers"
+                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                Ir a Editoriales
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
